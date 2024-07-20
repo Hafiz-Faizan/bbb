@@ -1,7 +1,5 @@
-const puppeteer = require('puppeteer'); // Use puppeteer instead of puppeteer-core
+const puppeteer = require('puppeteer');
 const { updateTrafficDataRank } = require('./helpers/dbHelpers');
-
-const CHROME_PATH = "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe";
 
 const generateTraffic = ({ url, keyword, stayTime, numBots, country, userId }) => {
     return async () => {
@@ -10,12 +8,11 @@ const generateTraffic = ({ url, keyword, stayTime, numBots, country, userId }) =
             browser = await puppeteer.launch({
                 headless: false,
                 args: [
-                    '--proxy-server=p.webshare.io:80',
-                    '--disable-infobars',
                     '--no-sandbox',
-                    '--disable-setuid-sandbox'
-                ],
-                executablePath: CHROME_PATH,
+                    '--disable-setuid-sandbox',
+                    '--disable-infobars',
+                    '--proxy-server=p.webshare.io:80'
+                ]
             });
 
             const searchKeywordOnGoogle = async (page, keyword, url) => {
@@ -27,7 +24,7 @@ const generateTraffic = ({ url, keyword, stayTime, numBots, country, userId }) =
                     // Check for reCAPTCHA and handle if found
                     if (await page.$('.g-recaptcha')) {
                         console.error(`reCAPTCHA found on Google search page. Skipping bot.`);
-                        return false; // Skip the bot if reCAPTCHA found
+                        return; // Skip the bot if reCAPTCHA found
                     }
 
                     let found = false;
@@ -107,12 +104,11 @@ const findWebsiteByKeyword = async ({ url, keyword, userId }) => {
         browser = await puppeteer.launch({
             headless: false,
             args: [
-                '--proxy-server=p.webshare.io:80',
-                '--disable-infobars',
                 '--no-sandbox',
-                '--disable-setuid-sandbox'
-            ],
-            executablePath: CHROME_PATH,
+                '--disable-setuid-sandbox',
+                '--disable-infobars',
+                '--proxy-server=p.webshare.io:80'
+            ]
         });
 
         const searchKeywordOnGoogle = async (page, keyword, url) => {
