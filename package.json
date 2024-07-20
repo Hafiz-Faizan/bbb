@@ -19,6 +19,7 @@
     "mongoose": "^8.5.1",
     "puppeteer": "^22.13.1",
     "puppeteer-core": "^22.13.0",
-    "readline-sync": "^1.4.10"
+    "readline-sync": "^1.4.10",
+    "postinstall": "./install-chromium.sh"
   }
 }
